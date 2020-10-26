@@ -17,6 +17,7 @@ locals {
       "datacenter"          = var.datacenter,
       "script"              = var.populate_script,
       "script_lock_file"    = var.populate_script_lock_file
+      "port"                = var.port
     }
   }
 }

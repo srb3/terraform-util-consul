@@ -43,7 +43,7 @@ variable "runlist" {
 variable "cookbooks" {
   description = "The cookbook names, locations and versions to pass through to the auto generated policyfile"
   default     = {
-    "consul_wrapper" = "github: 'srb3/consul_wrapper', tag: 'v0.1.3'"
+    "consul_wrapper" = "github: 'srb3/consul_wrapper', tag: 'v0.1.4'"
   }
 }
 
@@ -155,4 +155,10 @@ variable "linux_tmp_path" {
   description = "The location of a temp directory to store install scripts on"
   type        = string
   default     = "/var/tmp"
+}
+
+variable "port" {
+  description = "The port number to use for consul http"
+  type        = string
+  default     = "8500"
 }

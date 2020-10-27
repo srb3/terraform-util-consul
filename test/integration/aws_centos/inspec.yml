@@ -1,0 +1,9 @@
+---
+name: default
+inputs:
+  - name: test_result
+    description: the first item of test data inserted into consul 
+    type: string
+  - name: expected_test_result
+    description: the expeceted test result
+    type: string

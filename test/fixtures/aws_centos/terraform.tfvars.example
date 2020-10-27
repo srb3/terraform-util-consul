@@ -1,0 +1,10 @@
+aws_region     = ""
+aws_profile    = ""
+aws_creds_file = ""
+aws_key_name   = ""
+
+ingress_cidrs         = [""]
+ssh_user_private_key  = ""
+
+tags = {
+}

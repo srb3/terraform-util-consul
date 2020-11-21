@@ -43,7 +43,7 @@ variable "runlist" {
 variable "cookbooks" {
   description = "The cookbook names, locations and versions to pass through to the auto generated policyfile"
   default     = {
-    "consul_wrapper" = "github: 'srb3/consul_wrapper', tag: 'v0.1.7'"
+    "consul_wrapper" = "github: 'srb3/consul_wrapper', tag: 'v0.1.8'"
   }
 }
 

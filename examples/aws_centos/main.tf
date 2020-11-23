@@ -18,17 +18,17 @@ resource "random_id" "hash" {
 
 locals {
   public_subnets = ["10.0.1.0/24"]
-  azs            = [
-                     data.aws_availability_zones.available.names[0],
-                     data.aws_availability_zones.available.names[1]
-                   ]
+  azs = [
+    data.aws_availability_zones.available.names[0],
+    data.aws_availability_zones.available.names[1]
+  ]
 
   sg_data = {
     "consul" = {
       "ingress_rules" = ["ssh-tcp", "consul-webui-tcp"],
-      "ingress_cidr"  = concat(var.ingress_cidrs,local.public_subnets),
+      "ingress_cidr"  = concat(var.ingress_cidrs, local.public_subnets),
       "egress_rules"  = ["all-all"],
-      "egress_cidr"   = ["0.0.0.0/0"] 
+      "egress_cidr"   = ["0.0.0.0/0"]
       "description"   = "consul security group"
       "vpc_id"        = module.vpc.vpc_id
     }
@@ -48,13 +48,13 @@ locals {
 
   consul_data = {
     "consul" = {
-      "ip"                        = module.instance["consul"].public_ip[0],
-      "user_name"                 = module.ami.user,
-      "user_private_key"          = var.ssh_user_private_key,
-      "populate_script"           = var.consul_populate_script,
-      "datacenter"                = var.consul_datacenter,
-      "port"                      = var.consul_port,
-      "log_level"                 = var.consul_log_level
+      "ip"               = module.instance["consul"].public_ip[0],
+      "user_name"        = module.ami.user,
+      "user_private_key" = var.ssh_user_private_key,
+      "populate_script"  = var.consul_populate_script,
+      "datacenter"       = var.consul_datacenter,
+      "port"             = var.consul_port,
+      "log_level"        = var.consul_log_level
     }
   }
 }
@@ -94,25 +94,25 @@ module "instance" {
   security_group_ids          = each.value["security_group_ids"]
   subnet_ids                  = each.value["subnet_ids"]
   root_block_device           = each.value["root_block_device"]
-  associate_public_ip_address = each.value["public_ip_address"] 
+  associate_public_ip_address = each.value["public_ip_address"]
   tags                        = var.tags
 }
 
 module "consul" {
-  source                    = "../../"
-  for_each                  = local.consul_data
-  ip                        = each.value["ip"]
-  user_name                 = each.value["user_name"]
-  user_private_key          = each.value["user_private_key"]
-  populate_script           = each.value["populate_script"]
-  datacenter                = each.value["datacenter"]
-  port                      = each.value["port"]
-  log_level                 = each.value["log_level"]
-  depends_on                = [module.instance]
+  source           = "../../"
+  for_each         = local.consul_data
+  ip               = each.value["ip"]
+  user_name        = each.value["user_name"]
+  user_private_key = each.value["user_private_key"]
+  populate_script  = each.value["populate_script"]
+  datacenter       = each.value["datacenter"]
+  port             = each.value["port"]
+  log_level        = each.value["log_level"]
+  depends_on       = [module.instance]
 }
 
 provider "consul" {
-  address = length(module.instance["consul"].public_ip) >0 ? "${module.instance["consul"].public_ip[0]}:${var.consul_port}" : ""
+  address = length(module.instance["consul"].public_ip) > 0 ? "${module.instance["consul"].public_ip[0]}:${var.consul_port}" : ""
 }
 
 data "consul_keys" "test_data" {
